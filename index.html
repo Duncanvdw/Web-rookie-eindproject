@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="Javascript/burger-menu.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Bit Shop</title> 
+    <style>
+
+    </style> 
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="relative px-4 py-0 flex justify-between items-center  bg-white">
+        <a class="text-3xl font-bold" href="#">
+            <img src="./images/logo.png" class="h-24 mr-3 lg:ml-40 my-0 py-0" alt="Bit webshop" />
+        </a>
+        <div class="lg:hidden">
+            <button class="navbar-burger flex items-center text-blue-600 p-3">
+                <svg class="block h-8 w-8 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <title>Mobile menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="hidden absolute top-1/2 right-5 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
+            <li><a class="text-blue-600 font-bold" href="index.html">Home</a></li>
+            <li><a class="text-gray-400 font-bold hover:text-blue-500" href="contact.html">Contact</a></li>
+            <li class="flex justify-center items-center">
+                <img src="./images/shopping-cart.png" alt="Shoppinc cart" onclick="shoppingcart()" class="h-7 w-7 hover:cursor-pointer">
+            </li>
+        </ul>
+    </nav>
+    <div class="navbar-menu relative z-50 hidden transition-transform duration-500 ease-in-out">
+        <div class="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
+        <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-full max-w-sm pb-4 px-4 bg-white border-r overflow-y-auto">
+            <div class="flex items-center mb-8">
+                <a class="mr-auto text-3xl font-bold leading-none" href="#">
+                    <img src="./images/logo.png" class="h-24 mr-3 lg:ml-40 my-0 py-0" alt="DutchDestinations" />
+                </a>
+                <button class="navbar-close">
+                    <svg class="h-10 w-10 text-gray-400 cursor-pointer hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <ul>
+                    <li class="mb-1">
+                        <a class="block p-4 text-2xl md:text-4xl font-bold text-blue-600 hover:bg-blue-50 hover:text-blue-600 rounded" href="index.html">Home</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-2xl md:text-4xl font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="contact.html">Contact</a>
+                    </li>
+                    <li class="mb-1">
+                        <div class="flex flex-row items-center">
+                            <a class="block p-4 text-2xl md:text-4xl font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded" href="contact.html">Shopping cart</a>
+                            <img src="./images/shopping-cart.png" alt="Shoppinc cart" onclick="shoppingcart()" class="h-7 w-7 hover:cursor-pointer">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <div class="flex justify-center mt-20">
+        <div class="flex flex-col justify-center">
+            <h1 class="flex text-4xl font-bold w-72 text-center">Welkom bij de Bit shop</h1>
+            <p class="flex justify-center mt-6 text-xl w-72 text-center">Hier kan je alles kopen wat je nodig hebt</p>
+        </div>
+    </div>
+
+    <!-- Producten -->
+    <div class="flex flex-col justify-center mt-10">
+        <h2 class="text-2xl font-bold flex justify-center">Onze producten</h2>
+        <!-- Box van alle producten -->
+        <div class="flex flex-col justify-center items-center mt-10">
+            <!-- Box uitlaat systeem -->
+            <div class="rounded-lg w-[360px] flex flex-col justify-center mb-20">
+                <img src="./images/488-exhaust.jpg" alt="Uitlaat systeem" class="rounded-t-lg mb-3">
+                <h2 class="flex justify-center text-2xl font-medium">Ferrari 488 FI Exhaust system</h2>
+                <p class="flex justify-center text-xl font-normal">€8500,-</p>
+                <button id="btn" type="submit" value="Send" class="button-55" role="button">Voeg toe aan winkelwagen</button>
+            </div>
+            <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700">
+            <!-- Box uitlaat systeem -->
+            <div class="rounded-lg w-[360px] flex flex-col my-20">
+                <img src="./images/488-vering.jpg" alt="Vering systeem" class="rounded-t-lg mb-3">
+                <h2 class="flex justify-center text-2xl font-medium">Ferrari 488 AirREX luchtvering</h2>
+                <p class="flex justify-center text-xl">€6500,-</p>
+                <button id="btn" type="submit" value="Send" class="button-55" role="button">Voeg toe aan winkelwagen</button>
+            </div>
+            <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700">
+            <!-- Box widebody kit -->
+            <div class="rounded-lg w-[360px] flex flex-col my-20">
+                <img src="./images/488-liberty.jpg" alt="Widebody kit" class="rounded-t-lg mb-3">
+                <h2 class="flex justify-center text-2xl font-medium">Ferrari 488 Liberty Walk kit</h2>
+                <p class="flex justify-center text-xl">€32.500,-</p>
+                <button id="btn" type="submit" value="Send" class="button-55" role="button">Voeg toe aan winkelwagen</button>
+            </div>
+            <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700">
+            <!-- Box widebody kit -->
+            <div class="rounded-lg w-[360px] flex flex-col my-20">
+                <img src="./images/488-twin-turbo.jpg" alt="Vering systeem" class="rounded-t-lg mb-3">
+                <h2 class="flex justify-center text-2xl font-medium">Ferrari 488 Twin turbo kit</h2>
+                <p class="flex justify-center text-xl">€6000,-</p>
+                <button id="btn" type="submit" value="Send" class="button-55" role="button">Voeg toe aan winkelwagen</button>
+            </div>
+            <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700">
+            <!-- Box widebody kit -->
+            <div class="rounded-lg w-[360px] flex flex-col my-20">
+                <img src="./images/488-spoiler.jpg" alt="Ducktail spoiler" class="rounded-t-lg mb-3">
+                <h2 class="flex justify-center text-2xl font-medium">Ferrari 488 Liberty Walk spoiler</h2>
+                <p class="flex justify-center text-xl">€5000,-</p>
+                <button id="btn" type="submit" value="Send" class="button-55" role="button">Voeg toe aan winkelwagen</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
