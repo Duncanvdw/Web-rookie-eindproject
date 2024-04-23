@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="text/javascript" src="Javascript/burger-menu.js"></script>
     <link rel="stylesheet" href="dist/style.css" />
     <title>Bit Shop</title>
     <style></style>
+    <script src="//unpkg.com/alpinejs" defer></script>
   </head>
   <body>
     <!-- Navigation bar -->
@@ -137,6 +137,24 @@
         <p class="flex justify-center mt-6 text-xl w-72 text-center">
           Hier kan je alles kopen wat je nodig hebt
         </p>
+        <div
+          x-data="{ 
+          open: false,
+          string: '',
+          randomString() {
+            this.string = Math.random().toString(36).substring(2, 15);
+          }
+        }"
+        >
+          <button @click="open = !open">Expand</button>
+
+          <span x-show="open"> Content... </span>
+          <div>
+            <input type="text" x-model="string" />
+            <button @click="randomString()">Random string</button>
+            <span class="text-red-200" x-text="string"></span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -144,13 +162,15 @@
     <div class="flex flex-col justify-center mt-10">
       <h2 class="text-2xl font-bold flex justify-center">Onze producten</h2>
       <!-- Box van alle producten -->
-      <div class="flex flex-col justify-center items-center mt-10">
+      <div
+        class="p-4 space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0"
+      >
         <!-- Box uitlaat systeem -->
-        <div class="rounded-lg w-[360px] flex flex-col justify-center mb-20">
+        <div class="rounded-lg flex flex-col justify-center mb-20">
           <img
             src="./images/488-exhaust.jpg"
             alt="Uitlaat systeem"
-            class="rounded-t-lg mb-3"
+            class="rounded-t-lg mb-3 aspect-video object-cover"
           />
           <h2 class="flex justify-center text-2xl font-medium">
             Ferrari 488 FI Exhaust system
@@ -166,13 +186,13 @@
             Voeg toe aan winkelwagen
           </button>
         </div>
-        <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700" />
+
         <!-- Box uitlaat systeem -->
-        <div class="rounded-lg w-[360px] flex flex-col my-20">
+        <div class="rounded-lg flex flex-col my-20">
           <img
             src="./images/488-vering.jpg"
             alt="Vering systeem"
-            class="rounded-t-lg mb-3"
+            class="rounded-t-lg mb-3 aspect-video object-cover"
           />
           <h2 class="flex justify-center text-2xl font-medium">
             Ferrari 488 AirREX luchtvering
@@ -188,13 +208,13 @@
             Voeg toe aan winkelwagen
           </button>
         </div>
-        <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700" />
+
         <!-- Box widebody kit -->
-        <div class="rounded-lg w-[360px] flex flex-col my-20">
+        <div class="rounded-lg flex flex-col my-20">
           <img
             src="./images/488-liberty.jpg"
             alt="Widebody kit"
-            class="rounded-t-lg mb-3"
+            class="rounded-t-lg mb-3 aspect-video object-cover"
           />
           <h2 class="flex justify-center text-2xl font-medium">
             Ferrari 488 Liberty Walk kit
@@ -210,13 +230,13 @@
             Voeg toe aan winkelwagen
           </button>
         </div>
-        <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700" />
+
         <!-- Box widebody kit -->
-        <div class="rounded-lg w-[360px] flex flex-col my-20">
+        <div class="rounded-lg flex flex-col my-20">
           <img
             src="./images/488-twin-turbo.jpg"
             alt="Vering systeem"
-            class="rounded-t-lg mb-3"
+            class="rounded-t-lg mb-3 aspect-video object-cover"
           />
           <h2 class="flex justify-center text-2xl font-medium">
             Ferrari 488 Twin turbo kit
@@ -232,13 +252,13 @@
             Voeg toe aan winkelwagen
           </button>
         </div>
-        <hr class="h-px w-80 bg-gray-300 border-0 dark:bg-gray-700" />
+
         <!-- Box widebody kit -->
-        <div class="rounded-lg w-[360px] flex flex-col my-20">
+        <div class="rounded-lg flex flex-col my-20">
           <img
             src="./images/488-spoiler.jpg"
             alt="Ducktail spoiler"
-            class="rounded-t-lg mb-3"
+            class="rounded-t-lg mb-3 aspect-video object-cover"
           />
           <h2 class="flex justify-center text-2xl font-medium">
             Ferrari 488 Liberty Walk spoiler
