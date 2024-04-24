@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body>
+    <div
+    x-data="{ 
+    open: false,
+    string: '',
+    randomString() {
+      this.string = Math.random().toString(36).substring(2, 15);
+    }
+  }"
+  >
+    <button @click="open = !open">Expand</button>
+
+    <span x-show="open"> Content... </span>
+    <div>
+      <input type="text" x-model="string" />
+      <button @click="randomString()">Random string</button>
+      <span class="text-red-200" x-text="string"></span>
+    </div>
+  </div>
+</body>
+</html>
