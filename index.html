@@ -5,15 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="dist/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <title>Bit Shop</title>
   <style></style>
 </head>
 
-<body>
+<body class="bg-gray-200">
   <!-- Navigation bar -->
-  <nav class="relative flex items-center justify-between px-4 py-0 bg-white">
+  <nav class="relative flex items-center justify-between px-4 py-0 bg-gray-200">
     <a class="text-3xl font-bold" href="#">
-      <img src="./images/logo.png" class="h-24 py-0 my-0 mr-3 lg:ml-40" alt="Bit webshop" />
+      <img src="./images/logo-1.png" class="h-24 py-0 my-0 mr-3 lg:ml-40" alt="Bit webshop" />
     </a>
     <div class="lg:hidden">
       <button class="flex items-center p-3 text-blue-600 navbar-burger">
@@ -25,7 +26,9 @@
     </div>
     <ul
       class="absolute hidden transform -translate-x-1/2 -translate-y-1/2 top-1/2 right-5 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
-      <li><a class="font-bold text-blue-600" href="index.html">Home</a></li>
+      <li>
+        <a class="font-bold text-blue-600" href="index.html">Home</a>
+      </li>
       <li>
         <a class="font-bold text-gray-400 hover:text-blue-500" href="contact.html">Contact</a>
       </li>
@@ -38,6 +41,7 @@
       </li>
     </ul>
   </nav>
+  <hr class="h-px bg-gray-300 border-0">
   <div class="relative z-50 hidden transition-transform duration-500 ease-in-out navbar-menu">
     <div class="fixed inset-0 bg-gray-800 opacity-25 navbar-backdrop"></div>
     <nav class="fixed top-0 bottom-0 left-0 flex flex-col w-full max-w-sm px-4 pb-4 overflow-y-auto bg-white border-r">
@@ -78,85 +82,64 @@
   <!-- Header -->
   <div class="flex justify-center mt-20">
     <div class="flex flex-col justify-center">
-      <h1 class="flex text-4xl font-bold text-center w-72">
+      <h1 class="flex text-4xl font-bold text-center">
         Welkom bij de Bit shop
       </h1>
-      <p class="flex justify-center mt-6 text-xl text-center w-72">
+      <p class="flex justify-center mt-6 text-xl text-center">
         Hier kan je alles kopen wat je nodig hebt
       </p>
-
     </div>
   </div>
 
   <!-- Producten -->
-  <div class="flex flex-col justify-center mt-10">
+  <div class="flex flex-col justify-center mx-32 mt-10 mb-10">
     <h2 class="flex justify-center text-2xl font-bold">Onze producten</h2>
     <!-- Box van alle producten -->
-    <div class="p-4 space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
-      <!-- Box uitlaat systeem -->
-      <div class="flex flex-col justify-center mb-20 rounded-lg">
-        <img src="./images/488-exhaust.jpg" alt="Uitlaat systeem" class="object-cover mb-3 rounded-t-lg aspect-video" />
-        <h2 class="flex justify-center text-2xl font-medium">
-          Ferrari 488 FI Exhaust system
-        </h2>
-        <p class="flex justify-center text-xl font-normal">€8500,-</p>
-        <button id="btn" type="submit" value="Send" class="button-55" role="button">
-          Voeg toe aan winkelwagen
-        </button>
-      </div>
-
-      <!-- Box uitlaat systeem -->
-      <div class="flex flex-col my-20 rounded-lg">
-        <img src="./images/488-vering.jpg" alt="Vering systeem" class="object-cover mb-3 rounded-t-lg aspect-video" />
-        <h2 class="flex justify-center text-2xl font-medium">
-          Ferrari 488 AirREX luchtvering
-        </h2>
-        <p class="flex justify-center text-xl">€6500,-</p>
-        <button id="btn" type="submit" value="Send" class="button-55" role="button">
-          Voeg toe aan winkelwagen
-        </button>
-      </div>
-
-      <!-- Box widebody kit -->
-      <div class="flex flex-col my-20 rounded-lg">
-        <img src="./images/488-liberty.jpg" alt="Widebody kit"
-          class="object-cover mb-3 rounded-t-lg bg-red aspect-video" />
-        <h2 class="flex justify-center text-2xl font-medium">
-          Ferrari 488 Liberty Walk kit
-        </h2>
-        <p class="flex justify-center text-xl">€32.500,-</p>
-        <button id="btn" type="submit" value="Send" class="button-55" role="button">
-          Voeg toe aan winkelwagen
-        </button>
-      </div>
-
-      <!-- Box widebody kit -->
-      <div class="flex flex-col my-20 rounded-lg">
-        <img src="./images/488-twin-turbo.jpg" alt="Vering systeem"
-          class="object-cover mb-3 rounded-t-lg aspect-video" />
-        <h2 class="flex justify-center text-2xl font-medium">
-          Ferrari 488 Twin turbo kit
-        </h2>
-        <p class="flex justify-center text-xl">€6000,-</p>
-        <button id="btn" type="submit" value="Send" class="button-55" role="button">
-          Voeg toe aan winkelwagen
-        </button>
-      </div>
-
-      <!-- Box widebody kit -->
-      <div class="flex flex-col my-20 rounded-lg">
-        <img src="./images/488-spoiler.jpg" alt="Ducktail spoiler"
-          class="object-cover mb-3 rounded-t-lg aspect-video" />
-        <h2 class="flex justify-center text-2xl font-medium">
-          Ferrari 488 Liberty Walk spoiler
-        </h2>
-        <p class="flex justify-center text-xl">€5000,-</p>
-        <button id="btn" type="submit" value="Send" class="button-55" role="button">
-          Voeg toe aan winkelwagen
-        </button>
-      </div>
+    <div id="product-container" class="p-4 space-y-8 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-12 md:space-y-0">
+      <!-- Product items will be inserted here by JavaScript -->
     </div>
   </div>
-</body>
+  <script>
+    async function fetchProducts() {
+      try {
+        const response = await fetch('products.json');
+        const data = await response.json();
+        renderProducts(data.products);
+      } catch (error) {
+        console.error('Error fetching the products:', error);
+      }
+    }
 
+    function renderProducts(products) {
+      const container = document.getElementById('product-container');
+      container.innerHTML = ''; // Clear the container
+
+      products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'flex flex-col justify-between pb-8 bg-white rounded-lg shadow-xl';
+
+        productElement.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="object-cover rounded-t-lg aspect-video"/>
+          <h2 class="flex justify-start mt-4 ml-4 text-2xl font-medium">
+            ${product.name}
+          </h2>
+          <p class="flex justify-start my-4 ml-4 text-2xl font-medium">€${product.price},-</p>
+          <p class="flex justify-start mb-6 ml-4 mr-3 font-normal">${product.description}</p>
+          <button id="btn" type="submit" onclick="addToCart('${product.name}')" value="Send" class="flex justify-start p-2 ml-4 my-auto text-lg text-white rounded-md w-60 bg-[#2563EB]" role="button">
+            Voeg toe aan winkelwagen
+          </button>
+        `;
+
+        container.appendChild(productElement);
+      });
+    }
+
+    function addToCart(productName) {
+      alert(`${productName} toegevoegd aan winkelwagen.`);
+    }
+
+    // Fetch and render the products on page load
+    document.addEventListener('DOMContentLoaded', fetchProducts);
+  </script>
+</body>
 </html>
