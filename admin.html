@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="dist/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="admin.js" defer></script>
+  <title>Bit Shop Admin</title>
+</head>
+
+<body class="bg-gray-200">
+  <!-- Navigation bar -->
+  <nav class="relative flex items-center justify-between px-4 py-0 bg-gray-200">
+    <a class="text-3xl font-bold" href="#">
+      <img src="./images/logo-1.png" class="h-24 py-0 my-0 mr-3 lg:ml-40" alt="Bit webshop" />
+    </a>
+    <div class="lg:hidden">
+      <button class="flex items-center p-3 text-blue-600 navbar-burger">
+        <svg class="block w-8 h-8" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <title>Mobile menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+        </svg>
+      </button>
+    </div>
+    <ul class="absolute hidden transform -translate-x-1/2 -translate-y-1/2 top-1/2 right-5 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
+      <li>
+        <a class="font-bold text-blue-600" href="index.html">Home</a>
+      </li>
+      <li>
+        <a class="font-bold text-gray-400 hover:text-blue-500" href="contact.html">Contact</a>
+      </li>
+      <li class="flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+      </li>
+    </ul>
+  </nav>
+  <hr class="h-px bg-gray-300 border-0">
+
+  <!-- Header -->
+  <div class="flex justify-center mt-20">
+    <div class="flex flex-col justify-center">
+      <h1 class="flex justify-center text-4xl font-bold text-center">
+        Welkom op de admin pagina
+      </h1>
+      <p class="flex justify-center mt-6 text-xl text-center">
+        Hier kan je alle producten wijzigen, toevoegen en verwijderen
+      </p>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="container flex flex-col w-[80%] mx-auto mt-10">
+    <div class="flex justify-center mb-6">
+      <button id="viewOrders" class="px-4 py-2 ml-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">View Orders</button>
+    </div>
+    <div class="overflow-hidden rounded-md shadow-lg">
+      <table class="min-w-full bg-white" id="productTable">
+        <thead>
+          <tr class="w-full text-left bg-gray-200">
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Image</th>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Price</th>
+            <th class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="productTableBody">
+          <!-- Product rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-center m-6">
+      <button id="resetProducts" class="px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-700">Reset Products</button>
+    </div>
+  </div>
+
+  <!-- Add items form -->
+  <div class="container mx-auto mt-10 w-[80%]">
+    <h2 class="mb-4 text-2xl font-bold" id="formTitle">Add Products</h2>
+    <form id="productForm">
+      <input type="hidden" id="productId" />
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productName">Name</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productName" type="text" placeholder="Product Name" required>
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productPrice">Price</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productPrice" type="number" placeholder="Product Price" required>
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productDescription">Description</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productDescription" type="text" placeholder="Product Description" required>
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productPicture">Picture</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productPicture" type="file" accept="image/*" required>
+      </div>
+      <div class="mb-4">
+        <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- The modal for editing products -->
+  <dialog id="my_modal" class="rounded-md modal w-[1000px]">
+    <form id="productForm" class="m-4">
+      <input type="hidden" id="productId" />
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productName">Name</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productName" type="text" placeholder="Product Name" required>
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productPrice">Price</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productPrice" type="number" placeholder="Product Price" required>
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productPrice">Description</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productDescription" type="text" placeholder="Product Description" required>
+      </div>
+      <div class="mb-4">
+        <label class="block mb-2 text-lg font-bold" for="productPrice">Picture</label>
+        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productPicture" type="" placeholder="Product Picture" required>
+      </div>
+      <div class="modal-action">
+        <form method="dialog">
+          <!-- if there is a button in form, it will close the modal -->
+          <button class="text-white bg-white cursor-default">Close</button>
+        </form>
+      </div>
+      <div class="flex justify-between ml-4 mr-6">
+        <div class="mb-4">
+          <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700" onclick="addToLocalStorage()" type="submit">Save</button>
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="px-4 py-2 font-bold text-white bg-gray-400 rounded hover:bg-gray-700">Close</button>
+          </form>
+        </div>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
