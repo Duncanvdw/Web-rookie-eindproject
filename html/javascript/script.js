@@ -36,3 +36,6 @@ function renderProducts(products) {
 }
 
 document.addEventListener('DOMContentLoaded', fetchProducts);
+
+// Make the addToCart function accessible globally
+window.addToCart = addToCart;
