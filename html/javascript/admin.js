@@ -2,37 +2,37 @@
 const baseProducts = [
     {
         name: "Ferrari 488 FI Exhaust system",
-        price: "8500",
+        price: 8500,
         image: "./images/488-exhaust.jpg",
         description: "Ferrari 488 GTB / Spider Fi Exhaust (Frequency Intelligent Exhaust) high-performance valvetronic exhaust system"
     },
     {
         name: "Ferrari 488 AirREX luchtvering",
-        price: "6500",
+        price: 6500,
         image: "./images/488-vering.jpg",
         description: "Elevate your ride with customizable handling dynamics for unparalleled performance on any road with Ferrari 488 AirREX Air Suspension."
     },
     {
         name: "Ferrari 488 Liberty Walk kit",
-        price: "32500",
+        price: 32500,
         image: "./images/488-liberty.jpg",
         description: "Transform your Ferrari 488 with the bold Liberty Walk Body Kit, enhancing its iconic design for a powerful, individualized look."
     },
     {
         name: "Ferrari 488 Twin turbo kit",
-        price: "6000",
+        price: 6000,
         image: "./images/488-twin-turbo.jpg",
         description: "Experience a significant boost in power and torque with the TTE950 Twin Turbo Kit for the Ferrari 488."
     },
     {
         name: "Ferrari 488 Tail lights",
-        price: "2500",
+        price: 2500,
         image: "./images/488-taillights.jpg",
         description: "The Ferrari 488's tail lights feature distinctive circular designs and glowing red rings, enhancing the car's aggressive and sleek rear profile."
     },
     {
         name: "Ferrari 488 Liberty Walk spoiler",
-        price: "5000",
+        price: 5000,
         image: "./images/488-spoiler.jpg",
         description: "Make a statement with the Ferrari 488 Liberty Walk Rear Wing - Version 2 Duck Tail, combining style with performance."
     }
@@ -183,7 +183,7 @@ function closeModal() {
 function resetProducts() {
     productsData = [...baseProducts];
     localStorage.setItem('productsData', JSON.stringify(productsData));
-    renderTable(productsData);
+    renderTable(productsData); // Ensure the table is updated immediately
 }
 
 // Event listener for the reset products button
