@@ -1,8 +1,7 @@
 async function fetchProducts() {
     try {
-        const response = await fetch('products.json');
-        const data = await response.json();
-        renderProducts(data.products);
+        const productsData = JSON.parse(localStorage.getItem('productsData')) || [];
+        renderProducts(productsData);
     } catch (error) {
         console.error('Error fetching the products:', error);
     }
@@ -23,17 +22,13 @@ function renderProducts(products) {
         </h2>
         <p class="flex justify-start my-4 ml-4 text-2xl font-medium">${product.price},-</p>
         <p class="flex justify-start mb-6 ml-4 mr-3 font-normal">${product.description}</p>
-        <button id="btn" type="submit" onclick="addToCart('${product.name}')" value="Send" class="flex justify-start p-2 ml-4 my-auto text-lg text-white rounded-md w-60 bg-[#2563EB]" role="button">
+        <button id="btn" type="submit" onclick="addToCart('${product.name}', '${product.description}', '${product.price}')" value="Send" class="flex justify-start p-2 ml-4 my-auto text-lg text-white rounded-md w-60 bg-[#2563EB]" role="button">
           Voeg toe aan winkelwagen
         </button>
       `;
-
+      
         container.appendChild(productElement);
     });
-}
-
-function addToCart(productName) {
-    alert(`${productName} toegevoegd aan winkelwagen.`);
 }
 
 document.addEventListener('DOMContentLoaded', fetchProducts);
