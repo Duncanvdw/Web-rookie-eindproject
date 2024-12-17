@@ -1,7 +1,11 @@
 async function fetchProducts() {
     try {
-        const productsData = JSON.parse(localStorage.getItem('productsData')) || [];
-        renderProducts(productsData);
+        const response = await fetch("./products.JSON");
+        const productsData = await response.json();
+        if (!Array.isArray(productsData.products)) {
+            throw new Error('Products data is not an array');
+        }
+        renderProducts(productsData.products);
     } catch (error) {
         console.error('Error fetching the products:', error);
     }
