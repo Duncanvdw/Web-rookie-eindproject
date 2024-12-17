@@ -35,6 +35,20 @@ function renderProducts(products) {
     });
 }
 
+// Function to fetch products from localStorage
+function fetchProductsFromLocalStorage() {
+    const productsData = JSON.parse(localStorage.getItem('productsData')) || [];
+    renderProducts(productsData);
+}
+
+// Event listener for productsUpdated event
+window.addEventListener('productsUpdated', (event) => {
+    renderProducts(event.detail);
+});
+
+// Call fetchProductsFromLocalStorage when the page loads
+document.addEventListener('DOMContentLoaded', fetchProductsFromLocalStorage);
+
 document.addEventListener('DOMContentLoaded', fetchProducts);
 
 // Make the addToCart function accessible globally

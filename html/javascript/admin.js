@@ -170,6 +170,15 @@ function addProduct(event) {
     localStorage.setItem('productsData', JSON.stringify(productsData));
     renderTable(productsData);
     document.getElementById('productForm').reset();
+
+    // Update the products in index.html
+    updateIndexProducts();
+}
+
+// Function to update products in index.html
+function updateIndexProducts() {
+    const event = new CustomEvent('productsUpdated', { detail: productsData });
+    window.dispatchEvent(event);
 }
 
 // Function to close the modal
