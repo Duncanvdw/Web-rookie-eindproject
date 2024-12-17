@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="dist/style.css" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="admin.js" defer></script>
+  <script src="../javascript/admin.js" defer></script>
   <title>Bit Shop Admin</title>
 </head>
 
 <body class="bg-gray-200">
   <!-- Navigation bar -->
   <nav class="relative flex items-center justify-between px-4 py-0 bg-gray-200">
-    <a class="text-3xl font-bold" href="#">
-      <img src="./images/logo-1.png" class="h-24 py-0 my-0 mr-3 lg:ml-40" alt="Bit webshop" />
+    <a class="text-3xl font-bold" href="index.html">
+      <img src="../images/logo-1.png" class="h-24 py-0 my-0 mr-3 lg:ml-40" alt="Bit webshop" />
     </a>
     <div class="lg:hidden">
       <button class="flex items-center p-3 text-blue-600 navbar-burger">
@@ -54,9 +54,6 @@
 
   <!-- Main content -->
   <div class="container flex flex-col w-[80%] mx-auto mt-10">
-    <div class="flex justify-center mb-6">
-      <button id="viewOrders" class="px-4 py-2 ml-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">View Orders</button>
-    </div>
     <div class="overflow-hidden rounded-md shadow-lg">
       <table class="min-w-full bg-white" id="productTable">
         <thead>
@@ -81,7 +78,7 @@
   <!-- Add items form -->
   <div class="container mx-auto mt-10 w-[80%]">
     <h2 class="mb-4 text-2xl font-bold" id="formTitle">Add Products</h2>
-    <form id="productForm">
+    <form id="productForm" onsubmit="addProduct(event)">
       <input type="hidden" id="productId" />
       <div class="mb-4">
         <label class="block mb-2 text-lg font-bold" for="productName">Name</label>
@@ -105,44 +102,64 @@
     </form>
   </div>
 
-  <!-- The modal for editing products -->
-  <dialog id="my_modal" class="rounded-md modal w-[1000px]">
-    <form id="productForm" class="m-4">
-      <input type="hidden" id="productId" />
-      <div class="mb-4">
-        <label class="block mb-2 text-lg font-bold" for="productName">Name</label>
-        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productName" type="text" placeholder="Product Name" required>
-      </div>
-      <div class="mb-4">
-        <label class="block mb-2 text-lg font-bold" for="productPrice">Price</label>
-        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productPrice" type="number" placeholder="Product Price" required>
-      </div>
-      <div class="mb-4">
-        <label class="block mb-2 text-lg font-bold" for="productPrice">Description</label>
-        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productDescription" type="text" placeholder="Product Description" required>
-      </div>
-      <div class="mb-4">
-        <label class="block mb-2 text-lg font-bold" for="productPrice">Picture</label>
-        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="productPicture" type="" placeholder="Product Picture" required>
-      </div>
-      <div class="modal-action">
-        <form method="dialog">
-          <!-- if there is a button in form, it will close the modal -->
-          <button class="text-white bg-white cursor-default">Close</button>
-        </form>
-      </div>
-      <div class="flex justify-between ml-4 mr-6">
-        <div class="mb-4">
-          <button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700" onclick="addToLocalStorage()" type="submit">Save</button>
+  <!-- Main Modal -->
+  <div id="default-modal" tabindex="-1" aria-hidden="true" class="fixed inset-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto">
+    <div class="relative w-full max-w-2xl max-h-full p-4">
+        <!-- Modal Content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Edit Product
+                </h3>
+                <button id="closeModalButton" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="p-4 space-y-4 md:p-5">
+                <form id="editProductForm">
+                    <input type="hidden" id="editProductId" />
+                    <div class="mb-4">
+                        <label class="block mb-2 text-lg font-bold" for="editProductName">Name</label>
+                        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="editProductName" type="text" placeholder="Product Name" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-2 text-lg font-bold" for="editProductPrice">Price</label>
+                        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="editProductPrice" type="number" placeholder="Product Price" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-2 text-lg font-bold" for="editProductDescription">Description</label>
+                        <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="editProductDescription" type="text" placeholder="Product Description" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block mb-2 text-lg font-bold" for="editProductPicture">Picture</label>
+                        <input class="w-full px-3 py-2 leading-tight text-gray-700 bg-white border rounded shadow appearance-none focus:outline-none focus:shadow-outline" id="editProductPicture" type="file" accept="image/*">
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
+                <button id="saveChangesButton" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Save
+                </button>
+                <button id="cancelButton" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                    Cancel
+                </button>
+            </div>
         </div>
-        <div class="modal-action">
-          <form method="dialog">
-            <!-- if there is a button in form, it will close the modal -->
-            <button class="px-4 py-2 font-bold text-white bg-gray-400 rounded hover:bg-gray-700">Close</button>
-          </form>
-        </div>
-      </div>
-    </form>
-  </dialog>
+    </div>
+  </div>
+  <div class="flex flex-col items-center my-20">
+    <div class="flex justify-center">
+      <h2 class="text-3xl font-bold">Bestel overzicht</h2>
+    </div>
+    <div id="besteloverzicht" class="mt-10 w-[50%]">
+        <!-- Orders will be dynamically added here -->
+    </div>
+  </div>
+
 </body>
 </html>
