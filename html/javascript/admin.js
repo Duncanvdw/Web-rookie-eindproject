@@ -1,52 +1,27 @@
-// Base products data
-const baseProducts = [
-    {
-        name: "Ferrari 488 FI Exhaust system",
-        price: 8500,
-        image: "./images/488-exhaust.jpg",
-        description: "Ferrari 488 GTB / Spider Fi Exhaust (Frequency Intelligent Exhaust) high-performance valvetronic exhaust system"
-    },
-    {
-        name: "Ferrari 488 AirREX luchtvering",
-        price: 6500,
-        image: "./images/488-vering.jpg",
-        description: "Elevate your ride with customizable handling dynamics for unparalleled performance on any road with Ferrari 488 AirREX Air Suspension."
-    },
-    {
-        name: "Ferrari 488 Liberty Walk kit",
-        price: 32500,
-        image: "./images/488-liberty.jpg",
-        description: "Transform your Ferrari 488 with the bold Liberty Walk Body Kit, enhancing its iconic design for a powerful, individualized look."
-    },
-    {
-        name: "Ferrari 488 Twin turbo kit",
-        price: 6000,
-        image: "./images/488-twin-turbo.jpg",
-        description: "Experience a significant boost in power and torque with the TTE950 Twin Turbo Kit for the Ferrari 488."
-    },
-    {
-        name: "Ferrari 488 Tail lights",
-        price: 2500,
-        image: "./images/488-taillights.jpg",
-        description: "The Ferrari 488's tail lights feature distinctive circular designs and glowing red rings, enhancing the car's aggressive and sleek rear profile."
-    },
-    {
-        name: "Ferrari 488 Liberty Walk spoiler",
-        price: 5000,
-        image: "./images/488-spoiler.jpg",
-        description: "Make a statement with the Ferrari 488 Liberty Walk Rear Wing - Version 2 Duck Tail, combining style with performance."
+// Fetch base products data from JSON file
+async function fetchBaseProducts() {
+    try {
+        const response = await fetch('./products.json');
+        const data = await response.json();
+        return data.products;
+    } catch (error) {
+        console.error('Error fetching base products:', error);
+        return [];
     }
-];
-
-// Load products from localStorage or fall back to base products
-let productsData = JSON.parse(localStorage.getItem('productsData')) || [...baseProducts];
-
-// Save the base products to localStorage if no data exists
-if (!localStorage.getItem('productsData')) {
-    localStorage.setItem('productsData', JSON.stringify(productsData));
 }
 
-// Function to render the table
+let productsData = JSON.parse(localStorage.getItem('productsData')) || [];
+
+if (!localStorage.getItem('productsData')) {
+    fetchBaseProducts().then(baseProducts => {
+        productsData = [...baseProducts];
+        localStorage.setItem('productsData', JSON.stringify(productsData));
+        renderTable(productsData);
+    });
+} else {
+    renderTable(productsData);
+}
+
 function renderTable(productsData) {
     const productTableBody = document.getElementById('productTableBody');
     productTableBody.innerHTML = '';
@@ -65,7 +40,6 @@ function renderTable(productsData) {
         productTableBody.appendChild(row);
     });
 
-    // Add event listeners to the edit buttons
     document.querySelectorAll('.modal-toggle-button').forEach(button => {
         button.addEventListener('click', (event) => {
             const index = event.target.getAttribute('data-index');
@@ -82,16 +56,14 @@ function renderTable(productsData) {
     });
 }
 
-// Function to populate the modal form
 function populateEditForm(product, index) {
     document.getElementById('editProductId').value = index;
     document.getElementById('editProductName').value = product.name;
     document.getElementById('editProductPrice').value = product.price;
     document.getElementById('editProductDescription').value = product.description;
-    document.getElementById('editProductPicture').value = ''; // Reset file input
+    document.getElementById('editProductPicture').value = '';
 }
 
-// Function to save changes
 function saveChanges() {
     const index = document.getElementById('editProductId').value;
     const name = document.getElementById('editProductName').value;
@@ -100,7 +72,6 @@ function saveChanges() {
     const imageInput = document.getElementById('editProductPicture');
     const imageFile = imageInput.files[0];
 
-    // Update the product in the array
     const updatedProduct = productsData[index];
     updatedProduct.name = name;
     updatedProduct.price = price;
@@ -110,16 +81,12 @@ function saveChanges() {
         updatedProduct.image = URL.createObjectURL(imageFile);
     }
 
-    // Save the updates to localStorage
     localStorage.setItem('productsData', JSON.stringify(productsData));
 
-    // Update the table
     renderTable(productsData);
 
-    // Close the modal
     closeModal();
 
-    // Update the cart if the product is in the cart
     updateCartProduct(updatedProduct);
 }
 
@@ -139,14 +106,14 @@ function updateCartProduct(updatedProduct) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Function to delete a product
 function deleteProduct(index) {
     productsData.splice(index, 1);
     localStorage.setItem('productsData', JSON.stringify(productsData));
     renderTable(productsData);
 }
 
-// Function to add a new product
+document.getElementById('productForm').addEventListener('submit', addProduct);
+
 function addProduct(event) {
     event.preventDefault();
     const name = document.getElementById('productName').value;
@@ -156,61 +123,63 @@ function addProduct(event) {
     const imageFile = imageInput.files[0];
 
     if (!name || !price || !description || !imageFile) {
-        return; // Ensure all fields are filled
+        return;
     }
 
-    const newProduct = {
-        name,
-        price,
-        description,
-        image: URL.createObjectURL(imageFile)
+    const reader = new FileReader();
+    reader.onloadend = function() {
+        const newProduct = {
+            name,
+            price,
+            description,
+            image: reader.result // Base64 string
+        };
+
+        productsData.push(newProduct);
+        localStorage.setItem('productsData', JSON.stringify(productsData));
+        renderTable(productsData);
+        document.getElementById('productForm').reset();
+
+        updateIndexProducts();
+        updateIndexPageProducts(newProduct); // Dispatch event to update index page
     };
-
-    productsData.push(newProduct);
-    localStorage.setItem('productsData', JSON.stringify(productsData));
-    renderTable(productsData);
-    document.getElementById('productForm').reset();
-
-    // Update the products in index.html
-    updateIndexProducts();
+    reader.readAsDataURL(imageFile);
 }
 
-// Function to update products in index.html
+function updateIndexPageProducts(newProduct) {
+    const event = new CustomEvent('productAdded', { detail: newProduct });
+    window.dispatchEvent(event);
+}
+
 function updateIndexProducts() {
     const event = new CustomEvent('productsUpdated', { detail: productsData });
     window.dispatchEvent(event);
 }
 
-// Function to close the modal
 function closeModal() {
     const modal = document.getElementById('default-modal');
     modal.classList.add('hidden');
     modal.classList.remove('flex');
 }
 
-// Function to reset products to base products
 function resetProducts() {
-    productsData = [...baseProducts];
-    localStorage.setItem('productsData', JSON.stringify(productsData));
-    renderTable(productsData); // Ensure the table is updated immediately
+    fetchBaseProducts().then(baseProducts => {
+        productsData = [...baseProducts];
+        localStorage.setItem('productsData', JSON.stringify(productsData));
+        renderTable(productsData);
+    });
 }
 
-// Event listener for the reset products button
 document.getElementById('resetProducts').addEventListener('click', resetProducts);
 
-// Event listener for the close button (cross)
 document.getElementById('closeModalButton').addEventListener('click', closeModal);
 
-// Event listener for the cancel button
 document.getElementById('cancelButton').addEventListener('click', closeModal);
 
-// Event listener for the save button
 document.getElementById('saveChangesButton').addEventListener('click', saveChanges);
 
-// Event listener for the add product form
 document.getElementById('productForm').addEventListener('submit', addProduct);
 
-// Function to display orders
 function displayOrders() {
     let orders = JSON.parse(localStorage.getItem('orders')) || [];
     let besteloverzicht = document.getElementById('besteloverzicht');
@@ -242,7 +211,6 @@ function displayOrders() {
     besteloverzicht.appendChild(table);
 }
 
-// Call displayOrders when the page loads
 window.onload = function() {
     renderTable(productsData);
     displayOrders();

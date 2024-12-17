@@ -46,6 +46,15 @@ window.addEventListener('productsUpdated', (event) => {
     renderProducts(event.detail);
 });
 
+// Event listener for productAdded event
+window.addEventListener('productAdded', (event) => {
+    const newProduct = event.detail;
+    const productsData = JSON.parse(localStorage.getItem('productsData')) || [];
+    productsData.push(newProduct);
+    localStorage.setItem('productsData', JSON.stringify(productsData));
+    renderProducts(productsData);
+});
+
 // Call fetchProductsFromLocalStorage when the page loads
 document.addEventListener('DOMContentLoaded', fetchProductsFromLocalStorage);
 

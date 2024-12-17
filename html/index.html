@@ -87,15 +87,5 @@
     <script>
         document.addEventListener('DOMContentLoaded', fetchProductsFromLocalStorage);
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const addToCartButtons = document.querySelectorAll('.add-to-cart-button');
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    addToCart(this.dataset.productId);
-                });
-            });
-        });
-    </script>
 </body>
 </html>
