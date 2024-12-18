@@ -12,15 +12,16 @@ async function fetchBaseProducts() {
 
 let productsData = JSON.parse(localStorage.getItem('productsData')) || [];
 
-if (!localStorage.getItem('productsData')) {
-    fetchBaseProducts().then(baseProducts => {
+async function initializeProducts() {
+    if (!localStorage.getItem('productsData')) {
+        const baseProducts = await fetchBaseProducts();
         productsData = [...baseProducts];
         localStorage.setItem('productsData', JSON.stringify(productsData));
-        renderTable(productsData);
-    });
-} else {
+    }
     renderTable(productsData);
 }
+
+initializeProducts();
 
 function renderTable(productsData) {
     const productTableBody = document.getElementById('productTableBody');
