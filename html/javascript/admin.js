@@ -17,11 +17,13 @@ async function initializeProducts() {
         const baseProducts = await fetchBaseProducts();
         productsData = [...baseProducts];
         localStorage.setItem('productsData', JSON.stringify(productsData));
+    } else {
+        productsData = JSON.parse(localStorage.getItem('productsData'));
     }
     renderTable(productsData);
 }
 
-initializeProducts();
+document.addEventListener('DOMContentLoaded', initializeProducts);
 
 function renderTable(productsData) {
     const productTableBody = document.getElementById('productTableBody');
